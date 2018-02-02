@@ -136,7 +136,7 @@ def find_table_end(tokens, start_index):
             if depth == 0:
                 return i + 1
 
-    print("Fatal error occurred.", "Please check that your input is syntactically correct.", sep="\n")
+    print("Fatal error occurred.", "Please check that your input is syntactically correct.", "\n")
     exit(0)
 
 
