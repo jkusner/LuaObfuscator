@@ -152,7 +152,7 @@ def dot_to_index(tokens, strings):
     TODO a[[[b]]] -> a[_decrypt[[_encrypted_b]]]
     """
 
-    if "." in tokens:
+    while "." in tokens:
         pos = index(tokens, ".")
         table = tokens[pos - 1]
         field = tokens[pos + 1]
@@ -161,7 +161,6 @@ def dot_to_index(tokens, strings):
         tokens[pos] = "["
         tokens[pos + 1] = codename
         tokens.insert(pos + 2, "]")
-        dot_to_index(tokens, strings)
 
     return tokens, strings
 
