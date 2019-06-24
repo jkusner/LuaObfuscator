@@ -5,12 +5,18 @@ jobs:
   include:
     - os: windows
       language: shell
-      env: OARCH=x32 PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      env:
+        global:
+        - SOSAT=x32
+        - PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
     - os: windows
       language: shell
-      env: OARCH=x64 PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      env:
+        global:
+        - SOSAT=x64
+        - PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install python
     - os: linux
@@ -37,6 +43,6 @@ deploy:
   file_glob: true
   file: ./dist/LuaObfuscator*
   skip_cleanup: true
-  name: $TRAVIS_OS_NAME $OARCH
+  name: $TRAVIS_OS_NAME $SOSAT
   on:
     branch: master
