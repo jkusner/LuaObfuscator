@@ -1,7 +1,6 @@
 # env:
   # global:
   # - PYTHONIOENCODING=utf-8
-sudo: required
 jobs:
   include:
     - os: windows
@@ -9,9 +8,6 @@ jobs:
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
-      before_deploy:
-      - runas /noprofile /user:Administrator python __version__.py
-      - export TRAVIS_TAG=$(date +'%Y.%m.%d-%H_%M_%S')
     - os: linux
       language: python
       python: "3.6"    # 3.6 works!
@@ -29,7 +25,6 @@ script:
 - pyinstaller --onefile __main__.py -n LuaObfuscator
 - ls ./dist
 before_deploy:
-- sudo python __version__.py
 - export TRAVIS_TAG=$(date +'%Y.%m.%d-%H_%M_%S')
 deploy:
   provider: releases
@@ -37,6 +32,6 @@ deploy:
   file_glob: true
   file: ./dist/LuaObfuscator*
   skip_cleanup: true
-  name: $LOV - $TRAVIS_OS_NAME
+  name: $TRAVIS_OS_NAME
   on:
     branch: master
