@@ -22,11 +22,7 @@ jobs:
       python: "3.6"    # 3.6 works!
     - os: osx
       language: generic
-sudo: required
-addons:
-  apt:
-    packages:
-      - zip
+
 install:
 - pip install pyinstaller
 
