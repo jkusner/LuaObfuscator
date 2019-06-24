@@ -8,14 +8,14 @@ jobs:
       env: SOSAT=x32
       before_install:
       - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      - choco install --x86 python
+      - choco install --x86 python3
       - choco install zip
     - os: windows
       language: shell
       env: SOSAT=x64
       before_install:
       - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      - choco install python
+      - choco install python3
       - choco install zip
     - os: linux
       language: python
