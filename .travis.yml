@@ -10,6 +10,10 @@ jobs:
       before_install:
       - choco install --x86 python
     - os: linux
+      language: python
+      # dist: xenial   # ↓
+      python: "3.6"    # 3.6 works!
+    - os: osx
       language: generic
 
 install:
