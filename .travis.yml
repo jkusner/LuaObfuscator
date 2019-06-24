@@ -5,24 +5,29 @@ jobs:
   include:
     - os: windows
       language: shell
-      env: SOSAT=x32
-      before_install:
-      - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      - choco install --x86 python3
-      - choco install zip
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      before_install: choco install --x86 python
     - os: windows
       language: shell
-      env: SOSAT=x64
-      before_install:
-      - export PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      - choco install python3
-      - choco install zip
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      before_install: choco install python
+      script:
+      - pyinstaller --onefile __main__.py -n LuaObfuscator
+      - ls ./dist
+      - zip -r ./LuaObfuscator-win-x64 ./dist
+      - ls ./
     - os: linux
       language: python
       python: "3.6"    # 3.6 works!
     - os: osx
       language: generic
-
+cache:
+  directories:
+    - ./dist
+addons:
+  apt:
+    packages:
+      - zip
 install:
 - pip install pyinstaller
 
@@ -37,17 +42,18 @@ script:
   if [ $TRAVIS_OS_NAME != "windows" ]; then
     zip -r ./LuaObfuscator-$TRAVIS_OS_NAME ./dist
   else
-    zip -r ./LuaObfuscator-win-$SOSAT ./dist
+    zip -r ./LuaObfuscator-win-x32 ./dist
   fi
+- ls ./
 
 before_deploy:
-- export TRAVIS_TAG=$(date +'%Y.%m.%d-%H_%M_%S')
+- export TRAVIS_TAG=$(date +'%Y.%m.%d')
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file_glob: true
   file: ./LuaObfuscator-*
   skip_cleanup: true
-  name: $(date +'%Y.%m.%d-%H_%M_%S')
+  name: $(date +'%Y.%m.%d')
   on:
     branch: master
