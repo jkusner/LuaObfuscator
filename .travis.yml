@@ -6,11 +6,11 @@ jobs:
     - os: windows
       language: shell
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      before_install: choco install --x86 python
+      before_install: choco install --pre --x86 python
     - os: windows
       language: shell
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      before_install: choco install python
+      before_install: choco install --pre python
       script:
       - pyinstaller --onefile __main__.py -n LuaObfuscator
       - ls ./dist
