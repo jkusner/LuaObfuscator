@@ -27,13 +27,14 @@ script:
 - pyinstaller --onefile __main__.py -n LuaObfuscator
 - ls ./dist
 before_deploy:
-- export TRAVIS_TAG=$(date +'%Y.%m.%d')
+- python __version__.py
+- export TRAVIS_TAG=$(date +'%Y.%m.%d-%H_%M_%S')
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file_glob: true
   file: ./dist/LuaObfuscator*
   skip_cleanup: true
-  name: $(date +'%Y.%m.%d-%H_%M_%S') - $TRAVIS_OS_NAME
+  name: $LOV - $TRAVIS_OS_NAME
   on:
     branch: master
