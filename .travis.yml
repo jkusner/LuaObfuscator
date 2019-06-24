@@ -5,18 +5,13 @@ jobs:
   include:
     - os: windows
       language: shell
-      env:
-        global:
-        - SOSAT=x32
-        - PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      env: SOSAT=x32 PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
     - os: windows
       language: shell
       env:
-        global:
-        - SOSAT=x64
-        - PATH=/c/Python37:/c/Python37/Scripts:$PATH
+        global: SOSAT=x64 PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install python
     - os: linux
