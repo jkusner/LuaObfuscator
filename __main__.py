@@ -15,12 +15,6 @@ if cur_version < rec_version:
     print("The obfuscator may not work correctly!")
 
 
-VERSION = "Beta 1.0.3"
-VERSION_DATE = time.strftime("%b %d, %Y @ %I:%M %p", time.localtime(os.path.getmtime(__file__)))
-
-print("Version: {0} (Updated on {1})".format(VERSION, VERSION_DATE))
-
-
 in_file = "input.lua"
 out_file = "output.lua"
 decrypt_file = "__decrypt.lua"
@@ -39,9 +33,6 @@ parser.add_argument('--output',
 parser.add_argument("--level",
                     help='0 = original strings, 1 = small file, 2 = large file, 3 = huge file',
                     default=1)
-parser.add_argument("--dontcopy",
-                    help='Disable copying the output',
-                    action='store_true')
 parser.add_argument("--debug",
                     help="Enable debug mode",
                     action='store_true')
@@ -67,9 +58,9 @@ try:
     with open(global_file, "r") as f:
         globs = json.loads(f.read())
 
-
     # Do the obfuscation
-    lua, tokens, strings, comments = obfuscator.obfuscate(lua, encoder, globs, debug_mode)
+    lua, tokens, strings, comments = obfuscator.obfuscate(
+        lua, encoder, globs, debug_mode)
 
 except:
     if not debug_mode:
@@ -77,15 +68,6 @@ except:
         exit(0)
     else:
         raise
-
-
-if not dontcopy:
-    try:
-        import pyperclip
-        pyperclip.copy(lua)
-        print("Code copied to clipboard.")
-    except:
-        pass
 
 
 # Write the results

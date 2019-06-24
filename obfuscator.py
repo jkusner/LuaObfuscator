@@ -49,7 +49,8 @@ def obfuscate(lua, encoder, globs, debug=False, xor_val=-1):
 
     # Strip comments and strings
     lua, strings, comments = stringstripper.strip(lua)
-    log("Stripped {0} strings and {1} comments.".format(len(strings), len(comments)), False)
+    log("Stripped {0} strings and {1} comments.".format(
+        len(strings), len(comments)), False)
 
     # Tokenize
     tokens = tokenizer.tokenize(lua)
@@ -96,7 +97,8 @@ def obfuscate(lua, encoder, globs, debug=False, xor_val=-1):
     strings = encoder.encode_all(strings, xor_val)
     log("Obfuscated strings.")
 
-    tokens = stringstripper.replace(tokens, strings, DECRYPT_FUNC, encoder.get_str_start(), encoder.get_str_end())
+    tokens = stringstripper.replace(
+        tokens, strings, DECRYPT_FUNC, encoder.get_str_start(), encoder.get_str_end())
     log("Replaced strings.")
 
     lua = finalize.finalize(tokens, decrypt_code)
@@ -297,7 +299,8 @@ def rename_loops(tokens):
                 args = tokens[i+1:e:2]
                 for arg in args:
                     if arg not in replaced:
-                        tokens = replace_locals(tokens, arg, new_local_name(index(tokens, arg)), i)
+                        tokens = replace_locals(
+                            tokens, arg, new_local_name(index(tokens, arg)), i)
                         replaced.append(arg)
 
     return tokens

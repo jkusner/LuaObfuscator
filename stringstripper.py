@@ -50,7 +50,7 @@ def replace(lua, strings, decrypt_func="", start="[[", end="]]"):
 
 def strip_multiline_comments(lua):
     removed = []
-    #for i in range(len(COMMENT_START)):
+    # for i in range(len(COMMENT_START)):
     #    r = _build_regex(COMMENT_START[i], COMMENT_END[i])
     #    while True:
     #        match = r.search(lua)
@@ -110,7 +110,8 @@ def _strip_regular_strings(lua):
         if found is not None:
             placeholder = _build_string_placeholder()
             removed[placeholder] = found.group()[len(start):-len(end)]
-            lua = lua[:found.start()] + " " + placeholder + " " + lua[found.end():]
+            lua = lua[:found.start()] + " " + placeholder + \
+                " " + lua[found.end():]
         else:
             break
 
@@ -133,6 +134,8 @@ def _strip_multiline_strings(lua):
 
 
 string_index = -1
+
+
 def _build_string_placeholder():
     global string_index
     string_index += 1
