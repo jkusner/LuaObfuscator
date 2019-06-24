@@ -5,9 +5,14 @@ jobs:
   include:
     - os: windows
       language: shell
-      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      env: OARCH=x32 PATH=/c/Python37:/c/Python37/Scripts:$PATH
       before_install:
       - choco install --x86 python
+    - os: windows
+      language: shell
+      env: OARCH=x64 PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      before_install:
+      - choco install python
     - os: linux
       language: python
       python: "3.6"    # 3.6 works!
@@ -32,6 +37,6 @@ deploy:
   file_glob: true
   file: ./dist/LuaObfuscator*
   skip_cleanup: true
-  name: $TRAVIS_OS_NAME
+  name: $TRAVIS_OS_NAME $OARCH
   on:
     branch: master
