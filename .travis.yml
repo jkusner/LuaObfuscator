@@ -6,16 +6,19 @@ jobs:
     - os: windows
       language: shell
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      before_install: choco install --x86 python
+      before_install:
+      - choco install --x86 python
+      - choco install zip
+      after_script:
+      - zip -r ./LuaObfuscator-win-x32 ./dist
     - os: windows
       language: shell
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-      before_install: choco install python
-      script:
-      - pyinstaller --onefile __main__.py -n LuaObfuscator
-      - ls ./dist
+      before_install:
+      - choco install python
+      - choco install zip
+      after_script:
       - zip -r ./LuaObfuscator-win-x64 ./dist
-      - ls ./
     - os: linux
       language: python
       python: "3.6"    # 3.6 works!
@@ -37,15 +40,8 @@ branches:
 
 script:
 - pyinstaller --onefile __main__.py -n LuaObfuscator
-- ls ./dist
-- |
-  if [ $TRAVIS_OS_NAME != "windows" ]; then
-    zip -r ./LuaObfuscator-$TRAVIS_OS_NAME ./dist
-  else
-    zip -r ./LuaObfuscator-win-x32 ./dist
-  fi
-- ls ./
-
+after_script:
+- zip -r ./LuaObfuscator-$TRAVIS_OS_NAME ./dist
 before_deploy:
 - export TRAVIS_TAG=$(date +'%Y.%m.%d')
 
