@@ -9,7 +9,7 @@ jobs:
       before_install:
       - choco install --x86 python
       - choco install zip
-      after_script:
+      script:
       - zip -r ./LuaObfuscator-win-x32 ./dist
     - os: windows
       language: shell
@@ -17,7 +17,7 @@ jobs:
       before_install:
       - choco install python
       - choco install zip
-      after_script:
+      script:
       - zip -r ./LuaObfuscator-win-x64 ./dist
     - os: linux
       language: python
@@ -38,9 +38,9 @@ branches:
   only:
     - master
 
-script:
+before_script:
 - pyinstaller --onefile __main__.py -n LuaObfuscator
-after_script:
+script:
 - zip -r ./LuaObfuscator-$TRAVIS_OS_NAME ./dist
 before_deploy:
 - export TRAVIS_TAG=$(date +'%Y.%m.%d')
