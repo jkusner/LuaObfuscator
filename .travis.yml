@@ -48,6 +48,7 @@ script:
 
 before_deploy:
 - export TRAVIS_TAG=$(date +'%Y.%m.%d')
+
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
