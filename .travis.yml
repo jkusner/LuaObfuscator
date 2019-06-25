@@ -39,6 +39,7 @@ branches:
     - master
 
 before_script:
+- ls ./dist
 - pyinstaller --onefile __main__.py -n LuaObfuscator
 script:
 - zip -r ./LuaObfuscator-$TRAVIS_OS_NAME ./dist
