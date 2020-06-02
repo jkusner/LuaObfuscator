@@ -1,7 +1,8 @@
 import re
 import tokenizer
 
-WORD_PTRN = re.compile(r"^[^" + re.escape("".join(tokenizer.SPECIAL_CHARS)) + r"]*$")
+WORD_PTRN = re.compile(
+    r"^[^" + re.escape("".join(tokenizer.SPECIAL_CHARS)) + r"]*$")
 
 
 def finalize(tokens, decrypt_code):

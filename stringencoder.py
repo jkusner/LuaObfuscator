@@ -101,6 +101,7 @@ class Level3Encoder(Encoder):
         Up to 2 additional ascii characters will be added,
         and then each character is closed with '|'.
     """
+
     def __init__(self):
         self.level = 3
 
@@ -113,7 +114,8 @@ class Level3Encoder(Encoder):
         # number of invis characters (lua counts 1 invis as 3)
         invis = math.floor(total / 3)
 
-        regchars = ''.join(random.choice(ascii_letters + digits) for _ in range(regular))
+        regchars = ''.join(random.choice(ascii_letters + digits)
+                           for _ in range(regular))
 
         return obfuscator.INVISIBLE_CHAR * invis + regchars + "|"
 

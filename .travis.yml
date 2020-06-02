@@ -1,0 +1,57 @@
+# env:
+  # global:
+  # - PYTHONIOENCODING=utf-8
+jobs:
+  include:
+    - os: windows
+      language: shell
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+      before_install:
+      - choco install --x86 python
+      - choco install zip
+      script:
+      - zip -r ./LuaObfuscator-win-x32 ./dist
+    - os: windows
+      language: shell
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+      before_install:
+      - choco install python
+      - choco install zip
+      script:
+      - zip -r ./LuaObfuscator-win-x64 ./dist
+    - os: linux
+      language: python
+      python: "3.6"    # 3.6 works!
+    - os: osx
+      language: generic
+cache:
+  directories:
+    - ./dist
+addons:
+  apt:
+    packages:
+      - zip
+install:
+- pip install pyinstaller
+
+branches:
+  only:
+    - master
+
+before_script:
+- ls ./dist
+- pyinstaller --onefile __main__.py -n LuaObfuscator
+script:
+- zip -r ./LuaObfuscator-$TRAVIS_OS_NAME ./dist
+before_deploy:
+- export TRAVIS_TAG=$(date +'%Y.%m.%d')
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_glob: true
+  file: ./LuaObfuscator-*
+  skip_cleanup: true
+  name: $(date +'%Y.%m.%d')
+  on:
+    branch: master

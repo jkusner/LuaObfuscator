@@ -1,4 +1,4 @@
-# LuaObfuscator
+# LuaObfuscator [![Build Status](https://travis-ci.com/SupinePandora43/LuaObfuscator.svg)](https://travis-ci.com/SupinePandora43/LuaObfuscator)
 
 This lua obfuscator was originally designed for Garry's Mod, but should work on vanilla lua.
 Written for private use in January 2016. I never did anything with it so I decided to put it on GitHub.

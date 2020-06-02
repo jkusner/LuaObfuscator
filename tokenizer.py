@@ -23,14 +23,16 @@ RESERVED_WORDS = BUILTIN_WORDS + GM_WORDS
 
 TOKEN_PATTERN = re.compile(r"(\d*\.?\d+|[^\s"  # Checks for decimals with optional lead and required end ex: ".5", "0.5"
                            + re.escape("".join(SPECIAL_CHARS)) + r"]+|"
-                           + re.escape("___sep___".join(SPECIAL_STRINGS)).replace("___sep___", "|") + r"|["
+                           + re.escape("___sep___".join(SPECIAL_STRINGS)
+                                       ).replace("___sep___", "|") + r"|["
                            + re.escape("".join(SPECIAL_CHARS)) + r"])")
 
 WORD_PATTERN = re.compile(r"^[^\s"
                           + re.escape("".join(SPECIAL_CHARS)) + r"]+$")
 
 SCOPE_IN = ['do', 'then', 'function']
-SCOPE_OUT = ['end', 'elseif']  # 'elseif' because it comes with a second 'then'.
+# 'elseif' because it comes with a second 'then'.
+SCOPE_OUT = ['end', 'elseif']
 
 
 def tokenize(lua):
@@ -136,7 +138,8 @@ def find_table_end(tokens, start_index):
             if depth == 0:
                 return i + 1
 
-    print("Fatal error occurred.", "Please check that your input is syntactically correct.", sep="\n")
+    print("Fatal error occurred.",
+          "Please check that your input is syntactically correct.", sep="\n")
     exit(0)
 
 
