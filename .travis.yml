@@ -5,7 +5,7 @@ jobs:
   include:
     - os: windows
       language: shell
-      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
       before_install:
       - choco install --x86 python
       - choco install zip
@@ -13,7 +13,7 @@ jobs:
       - zip -r ./LuaObfuscator-win-x32 ./dist
     - os: windows
       language: shell
-      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
       before_install:
       - choco install python
       - choco install zip
