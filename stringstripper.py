@@ -141,6 +141,7 @@ def _replace_bracket_table_index(lua):
         start, end = TABLE_INDEX_BRACKET_START[i], TABLE_INDEX_BRACKET_END[i]
         r = _build_regex(start, end)
 
+        _offset = 0
         while True:
             match = r.search(lua, _offset)
             if match is None:
