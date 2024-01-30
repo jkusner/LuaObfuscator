@@ -8,6 +8,8 @@ STRING_END = ['"', "'"]
 COMMENT = ["//", "--"]
 COMMENT_START = ["/*", "--[["]
 COMMENT_END = ["*/", "]]"]
+TABLE_INDEX_BRACKET_START = ["["]
+TABLE_INDEX_BRACKET_END = ["]"]
 
 ALL_SYMBOLS = STRING_START_MULTILINE + STRING_END_MULTILINE + \
     STRING_START + STRING_END + COMMENT + COMMENT_START + COMMENT_END
@@ -22,6 +24,8 @@ def strip(lua):
 
     # Strip comments
     lua, removed_comments = strip_comments(lua)
+
+    lua = _replace_bracket_table_index(lua)
 
     # Check for failure
     for s in ALL_SYMBOLS:
@@ -130,6 +134,23 @@ def _strip_multiline_strings(lua):
             removed[placeholder] = match.group()[len(start):-len(end)]
             lua = lua[:match.start()] + placeholder + lua[match.end():]
     return lua, removed
+
+
+def _replace_bracket_table_index(lua):
+    for i in range(len(TABLE_INDEX_BRACKET_START)):
+        start, end = TABLE_INDEX_BRACKET_START[i], TABLE_INDEX_BRACKET_END[i]
+        r = _build_regex(start, end)
+
+        _offset = 0
+        while True:
+            match = r.search(lua, _offset)
+            if match is None:
+                break
+
+            pre = lua[:match.start()] + " " + match.group() + " "
+            lua = pre + lua[match.end():]
+            _offset = len(pre) # we need to do this because we dont remove those brackets which would result in an infinite loop
+    return lua
 
 
 string_index = -1
